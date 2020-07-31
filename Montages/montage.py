@@ -24,7 +24,7 @@ def montage(image_list, image_shape, montage_shape):
 		raise Exception('montage shape must be list or tuple of length 2 (rows, cols)')
 
 	image_montages = []
-	montage_image = np.zeros(shape=(image_shape[1] * montage_shape[1], 
+	montage_image = np.zeros(shape=(image_shape[1] * montage_shape[1],
 		image_shape[0] * montage_shape[0], 3),dtype=np.uint8)
 	cursor_pos = [0, 0]
 	start_new_img = False
