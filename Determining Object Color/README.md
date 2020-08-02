@@ -1,6 +1,8 @@
 ## DETERMINING OBJECT COLOR
 
-The following steps will be followed in this project:
+<img src="https://github.com/Furkan-Gulsen/opencv_projects/blob/master/Determining%20Object%20Color/ScreenRecorderProject6.gif" />
+
+**The following steps will be followed in this project:**
 - Setting the picture size to 300px width.
 - With GaussianBlur, the picture is blurred a bit.
 - With the cvtColor method, the picture is first converted to gray and then to the LAB color format.
@@ -12,12 +14,12 @@ The following steps will be followed in this project:
 - DrawContours draw the borders of the object.
 - With putText, the desired text is entered on the object.
 
-[1] The detect_shape method follows these steps, respectively:
+**[1] The detect_shape method follows these steps, respectively:**
 - Curve length is calculated by arcLength.
 - The coordinates of the object corners are calculated depending on the curve length calculated with approxPolyDP.
 - The shape name is returned depending on the number of corners calculated based on the above operations.
 
-[2] The detect_color method follows these steps, respectively:
+**[2] The detect_color method follows these steps, respectively:**
 - A dict named colors is being created. In this dict, 3 primary colors and valuable ones are entered.
 - A 3x1x3 matrix is ​​created with the zeros method.
 - The matrix created with the for loop is assigned the values ​​in the dict that we create as colors (lab).
