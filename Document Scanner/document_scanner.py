@@ -1,7 +1,3 @@
-# USAGE
-# python scan.py --image images/page.jpg
-
-# import the necessary packages
 from skimage.filters import threshold_local
 import numpy as np
 import argparse
@@ -18,6 +14,11 @@ def order_points(pts):
 	# the top-left point will have the smallest sum, whereas
 	# the bottom-right point will have the largest sum
 	s = pts.sum(axis = 1)
+	print("pts: ", pts)
+	print("s: ", s)
+	print("argmin: ", np.argmin(s))
+	print("pts(argmin): ",pts[np.argmin(s)] )
+
 	rect[0] = pts[np.argmin(s)]
 	rect[2] = pts[np.argmax(s)]
 
@@ -25,6 +26,7 @@ def order_points(pts):
 	# top-right point will have the smallest difference,
 	# whereas the bottom-left will have the largest difference
 	diff = np.diff(pts, axis = 1)
+	print("diff: ", diff)
 	rect[1] = pts[np.argmin(diff)]
 	rect[3] = pts[np.argmax(diff)]
 
