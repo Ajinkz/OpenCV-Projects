@@ -64,7 +64,7 @@ for c in cnts:
 
 # top->bottom, left->right
 question_cnts = Helpers.sort_contours(question_cnts, method="top-to-bottom")[0]
-
+number_of_true = 0
 """
 print("number of question_cnts", len(question_cnts))
 for c in question_cnts:
@@ -79,15 +79,40 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 """
 
-for (question, i) in enumerate(np.arange(0, len(question_cnts), int(len(question_cnts/5)))):
-	cnts = contours.sort_contours(questionCnts[i:i + 5])[0] # for each row
+
+for (question, i) in enumerate(np.arange(0, len(question_cnts), int(len(question_cnts)/5))):
+	cnts = Helpers.sort_contours(question_cnts[i:i + 5])[0] # for each row
 	bubbled = None
 
 	for (j, c) in enumerate(cnts):
 		mask = np.zeros_like(thresh)
 		mask = mask.astype('uint8')
-		cv2.drawContours(mas, [c], -1, color, 255, -1)
+		cv2.drawContours(mask, [c], -1, 255, -1)
+		"""
+		cv2.imshow("question", mask)
+		cv2.waitKey(0)
+		"""
 		mask = cv2.bitwise_and(thresh, thresh, mask=mask)
 		total = cv2.countNonZero(mask)
+		# The bubbled value will be None when each row is returned.
+		# In each question, the answer with the smallest area will be accepted.
+		# This is because when the person draw a balloon, that area is covered 
+		# in black. And the white color space is reduced. Here, determination is 
+		# made depending on that area.
+		if bubbled is None or total > bubbled[0]:
+			bubbled = (total, j)
 
-		
+	key = ANSWERS[question]
+	color = (0, 0, 255)
+	if key == bubbled[1]:
+		color = (0, 255, 0)
+		number_of_true += 1
+
+	cv2.drawContours(optic_form, [cnts[key]], -1, color, 3)
+
+score = (number_of_true/ 5.0) * 100
+cv2.putText(optic_form, "{:.2f}%".format(score), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
+cv2.imshow("Original", image)
+cv2.imshow("Output", optic_form)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
