@@ -17,7 +17,7 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 cv2.imshow("gray",gray)
 cv2.waitKey(0)
 
-circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 100)
+circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.3, 100)
 
 
 if circles is not None:
