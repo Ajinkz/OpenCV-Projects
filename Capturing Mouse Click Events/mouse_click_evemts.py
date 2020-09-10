@@ -19,11 +19,26 @@ def click_and_crop(event, x, y, flags, param):
 		cv2.imshow('image', image)
 
 
+def resize(image, width=None, height=None, inter=cv2.INTER_AREA):
+	dim = None
+	(h, w) = image.shape[:2]
+	if width is None and height is None:
+		return image
+	if width is None:
+		r = height / float(h)
+		dim = (int(w * r), height)
+	else:
+		r = width / float(w)
+		dim = (width, int(h * r))
+		resized = cv2.resize(image, dim, interpolation=inter)
+	return resized
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True, help="path to the image")
 args = vars(ap.parse_args())
 
 image = cv2.imread(args["image"])
+image = resize(image, 600)
 clone = image.copy()
 cv2.namedWindow("image")
 cv2.setMouseCallback("image", click_and_crop)
